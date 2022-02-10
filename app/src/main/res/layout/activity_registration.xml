@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,25 +7,204 @@
     tools:context=".RegistrationActivity"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_container"/>
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:gravity="center"
-        android:layout_alignParentBottom="true">
-
-        <com.google.android.material.button.MaterialButton
-            app:cornerRadius="10dp"
-            app:backgroundTint="@color/main_blue"
-            android:textColor="@color/white"
-            android:layout_width="155dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1">
+        <!--Email-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Következő"
-            android:id="@+id/reg_frgmt_btn"/>
+            android:layout_marginBottom="10dp"
+            android:hint="E-mail cím"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/main_blue"
+            app:hintTextColor="@color/input_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#2d3748"
+                android:id="@+id/reg_email_et"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reg_email_error"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--Jelszo-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="Jelszó"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconMode="password_toggle"
+            app:boxStrokeColor="@color/main_blue"
+            app:hintTextColor="@color/input_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="#2d3748"
+                android:id="@+id/reg_pwd_et"/>
+            <nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthMeter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:animateChanges="true"
+                app:showStrengthBar="true"
+                app:showStrengthLabel="true"
+                app:animationDuration="300"
+                android:id="@+id/pwd_meter"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--Jelszo ujra-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="Jelszó újra"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:endIconMode="password_toggle"
+            app:boxStrokeColor="@color/main_blue"
+            app:hintTextColor="@color/input_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="#2d3748"
+                android:id="@+id/reg_pwd_again_et"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/pwd_match_error"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        <!--Keresznev, Vezeteknev-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/main_blue"
+                app:hintTextColor="@color/input_hint"
+                android:hint="Keresztnév"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:gravity="start"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="#2d3748"
+                    android:id="@+id/reg_firstname_et"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/main_blue"
+                app:hintTextColor="@color/input_hint"
+                android:hint="Vezetéknév"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="#2d3748"
+                    android:id="@+id/reg_lastname_et"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <!--Szuletes-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:boxStrokeColor="@color/main_blue"
+            app:hintTextColor="@color/input_hint"
+            android:hint="mm/dd/yyyy"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#2d3748"
+                android:id="@+id/reg_birth_et"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reg_birth_error"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--Nem-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nem: "
+                android:textSize="16dp"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/reg_gender_group">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Férfi"
+                    app:buttonTint="@color/main_blue"
+                    android:layout_marginRight="50dp"
+                    />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nő"
+                    app:buttonTint="@color/main_blue"
+                    android:layout_marginRight="50dp"/>
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Egyéb"
+                    app:buttonTint="@color/main_blue"/>
+            </RadioGroup>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reg_gender_error"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
-</RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="10dp"
+        app:backgroundTint="@color/main_blue"
+        android:textColor="@color/white"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:id="@+id/reg_next_btn"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="35dp"/>
+</androidx.appcompat.widget.LinearLayoutCompat>
