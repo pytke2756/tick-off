@@ -91,7 +91,7 @@
                 android:textColor="@color/main_blue"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="Regisztráció"
+                android:text="@string/register"
                 android:layout_marginBottom="10sp"
                 android:id="@+id/reg_btn"/>
         </LinearLayout>
