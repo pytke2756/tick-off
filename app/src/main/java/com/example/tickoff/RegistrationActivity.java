@@ -41,6 +41,8 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        getSupportActionBar().hide();
+
         init();
 
 

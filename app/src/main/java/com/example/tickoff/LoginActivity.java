@@ -17,6 +17,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
+
         init();
 
         regBtn.setOnClickListener(new View.OnClickListener() {
