@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/activity_forgotten.xml" value="0.33" />
+        <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.33" />
