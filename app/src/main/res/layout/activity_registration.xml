@@ -144,7 +144,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:textColor="#2d3748"
-                android:id="@+id/reg_birth_et"/>
+                android:id="@+id/reg_birth_et"
+                android:focusable="false"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
