@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="datePickerTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/main_blue</item>
+        <item name="colorControlHighlight">@color/input_hint</item>
+        <item name="android:datePickerMode">calendar</item>
+    </style>
+</resources>
