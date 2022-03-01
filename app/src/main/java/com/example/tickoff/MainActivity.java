@@ -10,6 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +22,9 @@ public class MainActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private TextView username;
+    private ProgressBar xpBar;
+    private TextView xpStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,10 @@ public class MainActivity extends AppCompatActivity{
         getSupportActionBar().hide();
 
         init();
+        //TODO: szerverről jön majd !! az xp
+        xpBar.setProgress(25);
+        xpStatus.setText("25/100");
+        username.setText("username123");
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Todos()).commit();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this,
@@ -35,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -71,5 +82,10 @@ public class MainActivity extends AppCompatActivity{
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation);
+        View header = navigationView.getHeaderView(0);
+        username = header.findViewById(R.id.nav_header_username);
+        xpBar = header.findViewById(R.id.nav_header_xp_bar);
+        xpStatus = header.findViewById(R.id.nav_header_xp_status);
+
     }
 }
