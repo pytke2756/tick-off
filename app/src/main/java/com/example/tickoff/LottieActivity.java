@@ -10,7 +10,7 @@ public class LottieActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 2000;
 
-    int main = 1;
+    int main = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class LottieActivity extends AppCompatActivity {
                 }else{
                     changeActivity = new Intent(LottieActivity.this, LoginActivity.class);
                 }
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 startActivity(changeActivity);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
             }
         },SPLASH_TIME_OUT);
