@@ -68,14 +68,6 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
-
-
-        int szam = 0;
-
-        if (szam == 1){
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
     }
 
     private void init(){
