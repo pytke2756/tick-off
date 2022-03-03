@@ -5,6 +5,10 @@
       <map>
         <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/activity_forgotten.xml" value="0.33" />
         <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/fragment_todos.xml" value="0.1" />
+        <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/list_item_todo.xml" value="0.22" />
+        <entry key="..\:/Programing/Andorid/tick-off/app/src/main/res/layout/profil_data.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_round_add.xml" value="0.1235" />
