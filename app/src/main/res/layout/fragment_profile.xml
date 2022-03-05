@@ -6,44 +6,154 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Profile">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/profile_user_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background"/>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/profile_user_fullname"
             android:text="Teljes Név"
+            android:textAlignment="center"
             android:textSize="25sp"
-            android:layout_marginTop="15dp"/>
+            android:layout_below="@+id/profile_user_picture"
+            android:layout_marginBottom="40dp"/>
 
-
-
-        <com.google.android.material.button.MaterialButton
-            app:cornerRadius="10dp"
-            app:backgroundTint="@color/main_blue"
-            android:textColor="@color/white"
-            android:layout_width="155dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:text="Adatok módosítása"/>
+            android:id="@+id/profile_data"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/profile_user_fullname">
 
-        <com.google.android.material.button.MaterialButton
-            app:cornerRadius="10dp"
-            app:backgroundTint="@color/main_blue"
-            android:textColor="@color/white"
-            android:layout_width="155dp"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/profile_email"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/bottom_border_textview"
+                android:text="Email-cím:"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/profile_user_email"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/profile_email"
+                android:background="@drawable/bottom_border_textview"
+                android:text="example@test.com"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/profile_gender"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_email"
+                android:layout_alignParentStart="true"
+                android:text="Nem:"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border_textview"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Nő"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border_textview"
+                android:id="@+id/profile_user_gender"
+                android:layout_toEndOf="@+id/profile_gender"
+                android:layout_below="@+id/profile_user_email"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="Szint:"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border_textview"
+                android:id="@+id/profile_level"
+                android:layout_below="@+id/profile_gender"
+                android:layout_alignParentStart="true"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border_textview"
+                android:id="@+id/profile_user_level"
+                android:layout_toEndOf="@+id/profile_level"
+                android:layout_below="@+id/profile_user_gender"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="Születési dátum:"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border_textview"
+                android:id="@+id/profile_birthdate"
+                android:layout_below="@+id/profile_level"
+                android:layout_alignParentStart="true"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="1990.01.02"
+                android:textSize="17sp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bottom_border_textview"
+                android:id="@+id/profile_user_birthdate"
+                android:layout_toEndOf="@+id/profile_birthdate"
+                android:layout_below="@+id/profile_user_level"/>
+        </RelativeLayout>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:text="Jelszó módosítása"/>
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="40dp">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/main_blue"
+                android:textColor="@color/white"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_data_change"
+                android:textSize="13dp"
+                android:text="Adatok módosítása"/>
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/main_blue"
+                android:textColor="@color/white"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:text="Jelszó módosítása"
+                android:id="@+id/profile_psw_change"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
 
 </FrameLayout>
