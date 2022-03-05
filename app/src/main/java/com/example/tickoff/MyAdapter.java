@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         holder.todoTitle.setText(todos.get(position).getTodoTitle());
         holder.todoEndDate.setText(todos.get(position).getTodoEndDate());
         holder.todoCategory.setText(todos.get(position).getTodoCategory());
+        holder.todo = todos.get(position);
     }
 
     @Override
@@ -47,6 +48,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         TextView todoEndDate;
         TextView todoCategory;
 
+        ImageButton todoDone;
+        ImageButton todoCancel;
+
+        Todo todo;
+
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +60,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             todoTitle = itemView.findViewById(R.id.todo_title);
             todoEndDate = itemView.findViewById(R.id.todo_end_date);
             todoCategory = itemView.findViewById(R.id.todo_category);
+
+            todoDone = itemView.findViewById(R.id.todo_done);
+            todoCancel = itemView.findViewById(R.id.todo_cancel);
+
+            todoDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String message = todo.getTodoTitle() + " kész";
+                    Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            todoCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String message = todo.getTodoTitle() + " törölve";
+                    Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
