@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Todos extends Fragment {
+public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListener {
 
     private FloatingActionButton todoAdd;
     private RecyclerView todosUserTodos;
@@ -42,8 +42,7 @@ public class Todos extends Fragment {
         todoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: a gombra nyomva felugrik a felvétel ablak
-                Toast.makeText(getContext(),"Hozzáad", Toast.LENGTH_SHORT).show();
+                todoAdd();
             }
         });
 
@@ -57,5 +56,17 @@ public class Todos extends Fragment {
         todos.add(new Todo("Boltba menni", "2022.03.03", "Bevásárlás"));
         todos.add(new Todo("Takarítani", "2022.04.19", "Takarítás"));
         todos.add(new Todo("Vizsgamunka", "2022.04.20", "Tanulás"));
+    }
+
+    private void todoAdd(){
+        TodoAddDialog todoAddDialog = new TodoAddDialog();
+        todoAddDialog.show(getActivity().getSupportFragmentManager(), "teszt");
+        todoAddDialog.setListener(this);
+    }
+
+    @Override
+    public void dataSend(String title, String category, String date) {
+        todos.add(new Todo(title, date, category));
+        todosUserTodos.setAdapter(myAdapter);
     }
 }
