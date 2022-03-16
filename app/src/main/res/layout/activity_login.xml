@@ -6,96 +6,116 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25sp"
+            android:layout_marginBottom="5dp"
             android:hint="Email/Felhasználónév"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/main_blue"
             app:hintTextColor="@color/input_hint">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_email_user_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:textColor="#2d3748"/>
+                android:textColor="#2d3748" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_email_user_error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/error_red"
+            android:textSize="13sp" />
+
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25sp"
+            android:layout_marginBottom="5dp"
             android:hint="Jelszó"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:endIconMode="password_toggle"
             app:boxStrokeColor="@color/main_blue"
+            app:endIconMode="password_toggle"
             app:hintTextColor="@color/input_hint">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_psw_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textColor="#2d3748"/>
+                android:textColor="#2d3748" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_psw_error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/error_red"
+            android:textSize="13sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25sp">
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal">
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/login_remind_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Emlékezz rám"
-                app:buttonTint="@color/main_blue"/>
+                app:buttonTint="@color/main_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/login_forgot_psw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Elfelejtett jelszó"
-                android:gravity="right"
                 android:layout_weight="1"
-                android:id="@+id/forgot_psw"/>
+                android:gravity="right"
+                android:text="Elfelejtett jelszó" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="10dp"
-                app:backgroundTint="@color/main_blue"
+                android:id="@+id/login_login_btn"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:text="Bejelentkezés"
                 android:textColor="@color/white"
-                android:layout_width="155dp"
-                android:layout_height="wrap_content"
                 android:textSize="13dp"
-                android:text="Bejelentkezés"/>
+                app:backgroundTint="@color/main_blue"
+                app:cornerRadius="10dp" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/login_reg_btn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/main_blue"
-                app:rippleColor="@color/main_blue"
-                app:cornerRadius="10dp"
-                android:textColor="@color/main_blue"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="@string/register"
-                android:layout_marginBottom="10sp"
-                android:id="@+id/reg_btn"/>
-        </LinearLayout>
+                android:textColor="@color/main_blue"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/main_blue"
+                app:strokeColor="@color/main_blue" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

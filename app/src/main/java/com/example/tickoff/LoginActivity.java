@@ -1,6 +1,7 @@
 package com.example.tickoff;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +16,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private Button regBtn;
-    private TextView forgotPsw;
+    private MaterialButton regBtn;
+    private MaterialButton loginBtn;
+    private AppCompatTextView forgotPswTv;
+    private AppCompatTextView emailUserErrorTv;
+    private AppCompatTextView pswErrorTv;
+    private TextInputEditText userEmailEt;
+    private TextInputEditText userPswEt;
 
     private WifiManager wifiManager;
     private WifiInfo wifiInfo;
@@ -33,7 +42,36 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
         
-        forgotPsw.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userNameMail = userEmailEt.getText().toString();
+                String userPws = userPswEt.getText().toString();
+                emailUserErrorTv.setText("");
+                pswErrorTv.setText("");
+                boolean isValid = true;
+                
+                if (userNameMail.isEmpty()){
+                    isValid = false;
+                    emailUserErrorTv.setText(R.string.user_email_error);
+                }
+
+                if (userPws.isEmpty()){
+                    isValid = false;
+                    pswErrorTv.setText(R.string.psw_error);
+                }
+
+                if (isValid){
+                    //TODO: api request bejelentkezés küldése
+                    /*
+                    * Ha a request hibával tér vissza akkor az error textekbe bele írni!
+                    * */
+                }
+
+            }
+        });
+        
+        forgotPswTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent forgottenPsw = new Intent(LoginActivity.this, ForgottenActivity.class);
@@ -74,8 +112,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init(){
-        regBtn = findViewById(R.id.reg_btn);
-        forgotPsw = findViewById(R.id.forgot_psw);
+        regBtn = findViewById(R.id.login_reg_btn);
+        loginBtn = findViewById(R.id.login_login_btn);
+        userEmailEt = findViewById(R.id.login_email_user_et);
+        userPswEt = findViewById(R.id.login_psw_et);
+        forgotPswTv = findViewById(R.id.login_forgot_psw);
+        emailUserErrorTv = findViewById(R.id.login_email_user_error_tv);
+        pswErrorTv = findViewById(R.id.login_psw_error_tv);
 
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiManager.getConnectionInfo();
