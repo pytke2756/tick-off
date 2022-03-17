@@ -13,13 +13,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthCalculator;
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthMeter;
 
-public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse{
 
     private Button regNextBtn;
     private EditText regEmailEt;
@@ -167,7 +170,17 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                     isValid = false;
                 }
                 if (isValid){
-                    Toast.makeText(RegistrationActivity.this, "Sikeres regisztráció", Toast.LENGTH_SHORT).show();
+                    HashMap<String, String> regData = new HashMap<>();
+                    regData.put("email", email);
+                    regData.put("username", "test");
+                    regData.put("password", pwd);
+                    regData.put("firstName", firstname);
+                    regData.put("lastName", lastname);
+
+                    JSONObject regJSON = new JSONObject(regData);
+                    RequestTask reg = new RequestTask(RegistrationActivity.this, "http://10.0.2.2:5000/api/register", "POST", regJSON.toString());
+                    reg.execute();
+                    //Asdfg123$123a
                 }
             }
         });
@@ -253,5 +266,12 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         String date = month + "/" + dayOfMonth + "/" + year;
         regBirthEt.setText(date);
+    }
+
+    @Override
+    public void response(Response response) {
+        if (response.getResponseCode() >= 400){
+            regEmailError.setText(response.getContent());
+        }
     }
 }
