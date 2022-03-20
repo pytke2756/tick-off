@@ -20,7 +20,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:hint="E-mail cím"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/main_blue"
@@ -32,12 +32,39 @@
                 android:inputType="text"
                 android:textColor="#2d3748"
                 android:id="@+id/reg_email_et"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reg_email_error_tv"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="Felhasználónév"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/main_blue"
+            app:hintTextColor="@color/input_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/reg_email_error"/>
+                android:inputType="text"
+                android:textColor="#2d3748"
+                android:id="@+id/reg_username_et"/>
         </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reg_username_error_tv"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"/>
+
         <!--Jelszo-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -68,7 +95,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:hint="Jelszó újra"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:endIconMode="password_toggle"
@@ -82,58 +109,87 @@
                 android:textColor="#2d3748"
                 android:id="@+id/reg_pwd_again_et"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/pwd_match_error"/>
-            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pwd_match_error_tv"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"/>
         <!--Keresznev, Vezeteknev-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal"
             android:gravity="center_horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/main_blue"
-                app:hintTextColor="@color/input_hint"
-                android:hint="Keresztnév"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:gravity="start"
-                android:layout_weight="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="160dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="#2d3748"
-                    android:id="@+id/reg_firstname_et"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:boxStrokeColor="@color/main_blue"
+                    app:hintTextColor="@color/input_hint"
+                    android:hint="Keresztnév"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <com.google.android.material.textfield.TextInputLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#2d3748"
+                        android:id="@+id/reg_firstname_et"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reg_firstname_error_tv"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/error_red"
+                    android:textSize="13sp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/main_blue"
-                app:hintTextColor="@color/input_hint"
-                android:hint="Vezetéknév"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="160dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="#2d3748"
-                    android:id="@+id/reg_lastname_et"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:boxStrokeColor="@color/main_blue"
+                    app:hintTextColor="@color/input_hint"
+                    android:hint="Vezetéknév"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#2d3748"
+                        android:id="@+id/reg_lastname_et"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reg_lastname_error_tv"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/error_red"
+                    android:textSize="13sp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
         <!--Szuletes-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             app:boxStrokeColor="@color/main_blue"
             app:hintTextColor="@color/input_hint"
             android:hint="mm/dd/yyyy"
@@ -146,56 +202,14 @@
                 android:textColor="#2d3748"
                 android:id="@+id/reg_birth_et"
                 android:focusable="false"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/reg_birth_error"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <!--Nem-->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="left">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nem: "
-                android:textSize="16dp"/>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:id="@+id/reg_gender_group">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Férfi"
-                    app:buttonTint="@color/main_blue"
-                    android:layout_marginRight="50dp"
-                    />
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nő"
-                    app:buttonTint="@color/main_blue"
-                    android:layout_marginRight="50dp"/>
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Egyéb"
-                    app:buttonTint="@color/main_blue"/>
-            </RadioGroup>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/reg_gender_error"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
+            android:id="@+id/reg_birth_error_tv"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.button.MaterialButton
@@ -205,7 +219,7 @@
         android:layout_width="155dp"
         android:layout_height="wrap_content"
         android:text="@string/register"
-        android:id="@+id/reg_next_btn"
+        android:id="@+id/reg_reg_btn"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="35dp"/>
+        android:layout_marginBottom="30dp"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

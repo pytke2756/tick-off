@@ -5,6 +5,7 @@
     <string name="close">Zárva</string>
     <string name="user_email_error">Kötelező kitölteni az email/felhasználónév mezőt!</string>
     <string name="psw_error">Kötelező kitölteni a jelszó mezőt!</string>
+    <string name="empty_input_error">Kötelező kitölteni</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
