@@ -4,23 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthCalculator;
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthMeter;
 
-public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse{
 
     private MaterialButton regRegBtn;
     private TextInputEditText regEmailEt;
@@ -181,7 +186,22 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                 }
                 if (isValid){
                     //TODO: request api, regisztráció küldése, ha hiba van akkor mehetnek az errorokba
-                    Toast.makeText(RegistrationActivity.this, "Sikeres regisztráció", Toast.LENGTH_SHORT).show();
+                    HashMap<String, String> dataMap = new HashMap<String, String>();
+                    dataMap.put("email", email);
+                    dataMap.put("username", username);
+                    dataMap.put("password", pwd);
+                    dataMap.put("firstName", firstname);
+                    dataMap.put("lastName", lastname);
+                    String[] date = birthDay.split("/");
+                    Calendar c = Calendar.getInstance();
+                    c.set(Calendar.MONTH, Integer.parseInt(date[0]));
+                    c.set(Calendar.DATE, Integer.parseInt(date[1]));
+                    c.set(Calendar.YEAR, Integer.parseInt(date[2]));
+                    Date d = c.getTime();
+                    dataMap.put("born_date", String.valueOf(Math.floor(d.getTime()/1000)));
+                    JSONObject dataJSON = new JSONObject(dataMap);
+                    RequestTask registration = new RequestTask(RegistrationActivity.this, "http://10.0.2.2:5000/register", "POST", dataJSON.toString());
+                    registration.execute();
                 }
             }
         });
@@ -266,11 +286,26 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         meter.setEditText(regPwdEt);
 
         pwdIsValid = false;
+
     }
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         String date = month + "/" + dayOfMonth + "/" + year;
         regBirthEt.setText(date);
+    }
+
+    @Override
+    public void response(Response response) {
+        if (response.getResponseCode() >= 400){
+            //TODO: Errorokat visszaadni
+            Log.d("ERROR", response.getContent());
+        }
+        else{
+            Log.d("SIKER", response.getContent());
+            Intent login = new Intent(RegistrationActivity.this, LoginActivity.class);
+            startActivity(login);
+            finish();
+        }
     }
 }
