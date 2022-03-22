@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
     private WifiManager wifiManager;
     private WifiInfo wifiInfo;
 
+    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
                     dataMap.put("email_or_username", userNameMail);
                     dataMap.put("password", userPws);
                     JSONObject dataJSON = new JSONObject(dataMap);
-                    RequestTask login = new RequestTask(LoginActivity.this,"http://10.0.2.2:5000/api/login", "POST", dataJSON.toString());
+                    RequestTask login = new RequestTask(LoginActivity.this,"http://10.0.2.2:5000/login", "POST", dataJSON.toString());
                     login.execute();
                 }
 
@@ -138,6 +140,8 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
 
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiManager.getConnectionInfo();
+
+        sharedpreferences = getSharedPreferences("TickOff", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -148,6 +152,10 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
         }
         else if (response.getResponseCode() == 200){
             //TODO: a visszaadott tokent/id-t SharedPreferencesbe menteni
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("login", userEmailEt.getText().toString());
+            editor.putString("pwd", userPswEt.getText().toString());
+            editor.commit();
             Intent main = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(main);
             finish();

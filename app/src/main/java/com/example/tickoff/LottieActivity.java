@@ -2,13 +2,16 @@ package com.example.tickoff;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
 public class LottieActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 2000;
+    private SharedPreferences user;
 
     int main = 0;
 
@@ -20,6 +23,8 @@ public class LottieActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         SplashScreenActivation();
+
+
     }
 
     private void SplashScreenActivation() {
@@ -27,7 +32,8 @@ public class LottieActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent changeActivity;
-                if (main == 1){
+                user = getSharedPreferences("TickOff", Context.MODE_PRIVATE);
+                if (user.contains("login")){
                     changeActivity = new Intent(LottieActivity.this, MainActivity.class);
                 }else{
                     changeActivity = new Intent(LottieActivity.this, LoginActivity.class);
