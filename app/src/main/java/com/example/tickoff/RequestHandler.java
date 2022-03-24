@@ -7,18 +7,38 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class RequestHandler {
+    private static CookieManager cookieManager;
     private RequestHandler(){}
     public static Response get(String url) throws IOException {
         HttpURLConnection conn = setupConnection(url);
         return getResponse(conn);
     }
     public static Response post(String url, String data) throws IOException {
+        cookieManager = new java.net.CookieManager();
+        CookieHandler.setDefault(cookieManager);
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         HttpURLConnection conn = setupConnection(url);
+
+        if (cookieManager.getCookieStore().getCookies().size() > 0) {
+
+            List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+
+            if (cookies != null) {
+                for (HttpCookie cookie : cookies) {
+                    conn.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
+                }
+            }
+        }
         conn.setRequestMethod("POST");
         addRequestBody(conn, data);
         return getResponse(conn);
