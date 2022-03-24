@@ -11,11 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
     private TextView xpStatus;
 
     private boolean loggingOut;
+    private int sendDataTo;
+    private DataToFragments dataToFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,21 +56,32 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        RequestTask todos = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/todo", "GET");
+        todos.execute();
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.main:
+                        RequestTask todos = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/todo", "GET");
+                        todos.execute();
+                        sendDataTo = R.id.main;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Todos()).commit();
                         break;
                     case R.id.favorites:
+                        sendDataTo = R.id.favorites;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favorites()).commit();
                         break;
                     case R.id.profile:
+                        RequestTask profile = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/profile-data", "GET");
+                        profile.execute();
+                        sendDataTo = R.id.profile;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Profile()).commit();
                         break;
                     case R.id.logout:
+                        sendDataTo = R.id.logout;
                         SharedPreferences user = getSharedPreferences("TickOff", Context.MODE_PRIVATE);
                         user.edit().remove("login").commit();
                         user.edit().remove("pwd").commit();
@@ -86,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
         });
     }
 
+    public void setdata(DataToFragments dataToFragments){
+        this.dataToFragments = dataToFragments;
+    }
+
     private void init(){
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer);
@@ -96,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
         xpStatus = header.findViewById(R.id.nav_header_xp_status);
 
         loggingOut = false;
-
+        sendDataTo = R.id.main;
     }
 
     @Override
@@ -122,6 +139,27 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
 
     @Override
     public void response(Response response) {
+        switch (sendDataTo){
+            case R.id.main:
+                dataToFragments.sendData(response);
+                sendDataToReset();
+                break;
+            case R.id.favorites:
+                dataToFragments.sendData(response);
+                sendDataToReset();
+                break;
+            case R.id.profile:
+                dataToFragments.sendData(response);
+                sendDataToReset();
+                break;
+            case R.id.logout:
+                Log.d("LOGOUT", response.getContent());
+                sendDataToReset();
+                break;
+        }
+    }
 
+    private void sendDataToReset(){
+        sendDataTo = -1;
     }
 }
