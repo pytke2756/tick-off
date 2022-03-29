@@ -31,9 +31,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyHolder holder, int position) {
-        holder.todoTitle.setText(todos.get(position).getTodoTitle());
-        holder.todoEndDate.setText(todos.get(position).getTodoEndDate());
-        holder.todoCategory.setText(todos.get(position).getTodoCategory());
+        holder.todoTitle.setText(todos.get(position).getTodo());
+        holder.todoEndDate.setText(String.valueOf(todos.get(position).getDate())); //TODO: ezt javítani mert ez most teszt, kell az endDate
+        holder.todoCategory.setText(Categories.getCategory(todos.get(position).getCategory_id())); //átalakítani szöveggé
         holder.todo = todos.get(position);
     }
 
@@ -67,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             todoDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String message = todo.getTodoTitle() + " kész";
+                    String message = todo.getTodo() + " kész";
                     Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -75,7 +75,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             todoCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String message = todo.getTodoTitle() + " törölve";
+                    String message = todo.getTodo() + " törölve";
                     Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
                 }
             });

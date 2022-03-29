@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        sendDataTo = R.id.main;
         RequestTask todos = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/todo", "GET");
         todos.execute();
+
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -140,10 +142,6 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
     @Override
     public void response(Response response) {
         switch (sendDataTo){
-            case R.id.main:
-                dataToFragments.sendData(response);
-                sendDataToReset();
-                break;
             case R.id.favorites:
                 dataToFragments.sendData(response);
                 sendDataToReset();
@@ -156,6 +154,11 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                 Log.d("LOGOUT", response.getContent());
                 sendDataToReset();
                 break;
+            default:
+                dataToFragments.sendData(response);
+                sendDataToReset();
+                break;
+
         }
     }
 
