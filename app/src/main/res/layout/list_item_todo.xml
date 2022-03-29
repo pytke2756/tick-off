@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/todo_done"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_x" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_tick"
             android:layout_marginLeft="35dp"/>
 
