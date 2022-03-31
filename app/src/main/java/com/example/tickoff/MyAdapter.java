@@ -32,7 +32,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyHolder holder, int position) {
         holder.todoTitle.setText(todos.get(position).getTodo());
-
         holder.todoEndDate.setText(UnixDateConverter.toDateString(todos.get(position).getCreation_date())); //TODO: ezt javítani mert ez most teszt, kell az endDate
         holder.todoCategory.setText(Categories.getCategory(todos.get(position).getCategory_id())); //átalakítani szöveggé
         holder.todo = todos.get(position);
