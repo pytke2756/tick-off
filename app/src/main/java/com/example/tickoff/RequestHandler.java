@@ -1,5 +1,8 @@
 package com.example.tickoff;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -17,28 +20,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class RequestHandler {
-    private static CookieManager cookieManager;
+    private static CookieManager cookieManager = new java.net.CookieManager();
     private RequestHandler(){}
     public static Response get(String url) throws IOException {
         HttpURLConnection conn = setupConnection(url);
         return getResponse(conn);
     }
     public static Response post(String url, String data) throws IOException {
-        cookieManager = new java.net.CookieManager();
-        CookieHandler.setDefault(cookieManager);
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         HttpURLConnection conn = setupConnection(url);
-
-        if (cookieManager.getCookieStore().getCookies().size() > 0) {
-
-            List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
-
-            if (cookies != null) {
-                for (HttpCookie cookie : cookies) {
-                    conn.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
-                }
-            }
-        }
         conn.setRequestMethod("POST");
         addRequestBody(conn, data);
         return getResponse(conn);
@@ -53,6 +42,8 @@ public class RequestHandler {
         HttpURLConnection conn = setupConnection(url);
         conn.setRequestMethod("DELETE");
         return getResponse(conn);
+
+        //asd123Asd$!as
     }
 
     private static void addRequestBody(HttpURLConnection conn, String data) throws IOException{
@@ -72,6 +63,21 @@ public class RequestHandler {
         conn.setRequestProperty("Accept", "application/json");
         conn.setConnectTimeout(10000);
         conn.setReadTimeout(10000);
+        if (cookieManager.getCookieStore().getCookies().size() > 0) {
+
+            List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+
+            if (cookies != null) {
+                for (HttpCookie cookie : cookies) {
+                    Log.d("COOKIE", cookie.getValue());
+                    Log.d("COOKIE", cookie.getName());
+                    //conn.setRequestProperty("Cookie", cookie.getName() + "=" + cookie.getValue());
+                }
+            }
+        }
+        else {
+            Log.d("COOKIE", "NINCS");
+        }
         return conn;
     }
 
@@ -93,5 +99,10 @@ public class RequestHandler {
         br.close();
         is.close();
         return new Response(responseCode, builder.toString());
+    }
+
+    public static void setup(){
+        CookieHandler.setDefault(cookieManager);
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
     }
 }

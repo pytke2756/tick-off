@@ -21,13 +21,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONObject;
-
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
-public class TodoAddDialog extends AppCompatDialogFragment implements DatePickerDialog.OnDateSetListener{
+public class TodoAddDialog extends AppCompatDialogFragment implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse{
     private TextInputEditText editTextTitle;
     private AppCompatSpinner todoDialogCategorySpinner;
     private TextInputEditText editTextDate;
@@ -75,13 +72,6 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
                         }
                         if (isValid){
                             todoAddDialogListener.dataSend(title, Categories.getIndex(category), dateInteger);
-                            HashMap<String, String> todoAddMap = new HashMap<String, String>();
-                            todoAddMap.put("todo", title);
-                            todoAddMap.put("categoryID", String.valueOf(Categories.getIndex(category)));
-                            JSONObject todoAddJSON = new JSONObject(todoAddMap);
-                            Log.d("JSON ADD", todoAddJSON.toString());
-                            RequestTask todoAdd = new RequestTask(getContext(), "http://localhost:5000/todo", "POST", todoAddJSON.toString());
-                            todoAdd.execute();
                         }
                         else{
                             Toast.makeText(getContext(), "Kötelező mindent kitölteni", Toast.LENGTH_SHORT).show();
@@ -107,14 +97,31 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        String date = month + "/" + dayOfMonth + "/" + year;
+        String monthString = String.valueOf(month+1);
+        String dayString = String.valueOf(dayOfMonth);
+        if (month < 10){
+            monthString = "0"+(month+1);
+        }
+        if (dayOfMonth < 10){
+            dayString = "0" + dayString;
+        }
+        String date = year + "." + monthString  + "." + dayString + ".";
+        Log.d("date", date);
+        Log.d("dateDay", String.valueOf(dayOfMonth));
+        Log.d("dateMonth", String.valueOf(month));
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.MONTH, 3);
-        c.set(Calendar.DATE, 29);
-        c.set(Calendar.YEAR, 2022);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DATE, dayOfMonth);
+        c.set(Calendar.YEAR, year);
         Date d = c.getTime();
-        dateInteger = d.getTime();
+        dateInteger = UnixDateConverter.toUnixTime(d.getTime());
+        Log.d("DATEINTEGER", String.valueOf(dateInteger));
         editTextDate.setText(date);
+    }
+
+    @Override
+    public void response(Response response) {
+
     }
 
     public interface TodoAddDialogListener{
@@ -154,4 +161,30 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
         datePickerDialog.show();
 
     }
+
+    /*private class TodoAddTask extends AsyncTask<Void, Void, Response> {
+        private String todoAddJsonString;
+        public TodoAddTask(String todoAddJsonString){
+            this.todoAddJsonString = todoAddJsonString;
+        }
+
+        @Override
+        protected Response doInBackground(Void... voids) {
+            Response response = null;
+            try {
+                response = RequestHandler.post(, todoAddJsonString);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(Response response) {
+            super.onPostExecute(response);
+            if (response.getResponseCode() >= 400){
+                todoDialogTitleError.setText(response.getContent());
+            }
+        }
+    }*/
 }

@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                 sendDataToReset();
                 break;
             default:
+                Log.d("RES", String.valueOf(response == null));
                 dataToFragments.sendData(response);
                 sendDataToReset();
                 break;

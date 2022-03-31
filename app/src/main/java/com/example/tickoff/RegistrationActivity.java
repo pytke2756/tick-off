@@ -190,6 +190,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                     dataMap.put("email", email);
                     dataMap.put("username", username);
                     dataMap.put("password", pwd);
+                    dataMap.put("password_again", regPwdAgainEt.getText().toString());
                     dataMap.put("firstName", firstname);
                     dataMap.put("lastName", lastname);
                     String[] date = birthDay.split("/");

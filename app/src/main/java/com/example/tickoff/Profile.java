@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class Profile extends Fragment implements DataToFragments{
 
     private AppCompatImageView profileUserPicture;
@@ -66,7 +68,8 @@ public class Profile extends Fragment implements DataToFragments{
                 profileUserFullname.setText(fullName);
                 profileUserEmail.setText(data.getString("email"));
                 profileUserUsername.setText(data.getString("username"));
-                profileUserRegdate.setText(data.getString("register_date"));
+                profileUserBirthdate.setText(UnixDateConverter.toDateString(data.getLong("born_date")));
+                profileUserRegdate.setText(UnixDateConverter.toDateString(data.getLong("register_date")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

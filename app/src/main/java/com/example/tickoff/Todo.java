@@ -50,11 +50,4 @@ public class Todo {
     public boolean getDone() {
         return done;
     }
-
-    public String getDate(){
-        long date = this.getCreation_date();
-        Date dateRaw = new Date(date);
-        SimpleDateFormat dateFormatted = new SimpleDateFormat("yyyy.MM.dd");
-        return dateFormatted.format(dateRaw);
-    }
 }
