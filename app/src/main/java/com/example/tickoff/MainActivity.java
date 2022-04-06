@@ -93,9 +93,9 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                         SharedPreferences user = getSharedPreferences("TickOff", Context.MODE_PRIVATE);
                         user.edit().remove("login").commit();
                         user.edit().remove("pwd").commit();
+                        user.edit().remove("remind").commit();
                         loggingOut = true;
-                        RequestTask logout = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/logout", "GET");
-                        logout.execute();
+                        logout();
                         Intent login = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(login);
                         finish();
@@ -140,9 +140,23 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
     protected void onStop() {
         super.onStop();
         if (!loggingOut){
-            RequestTask logout = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/logout", "GET");
-            logout.execute();
+            logout();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences remindCheck = getSharedPreferences("TickOff", Context.MODE_PRIVATE);
+        boolean reminder = remindCheck.getBoolean("remind", false);
+        if (!reminder && !loggingOut){
+            SharedPreferences user = getSharedPreferences("TickOff", Context.MODE_PRIVATE);
+            user.edit().remove("login").commit();
+            user.edit().remove("pwd").commit();
+            user.edit().remove("remind").commit();
+            logout();
+        }
+
     }
 
     @Override
@@ -171,4 +185,10 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
     private void sendDataToReset(){
         sendDataTo = -1;
     }
+
+    private void logout(){
+        RequestTask logout = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/logout", "GET");
+        logout.execute();
+    }
+
 }

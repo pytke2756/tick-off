@@ -22,8 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
     private AppCompatTextView pswErrorTv;
     private TextInputEditText userEmailEt;
     private TextInputEditText userPswEt;
+    private MaterialCheckBox loginRemindCb;
 
     private WifiManager wifiManager;
     private WifiInfo wifiInfo;
@@ -58,8 +61,8 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userNameMail = userEmailEt.getText().toString();
-                String userPws = userPswEt.getText().toString();
+                String userNameMail = userEmailEt.getText().toString().trim();
+                String userPws = userPswEt.getText().toString().trim();
                 errorReset();
                 boolean isValid = true;
                 
@@ -74,15 +77,16 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
                 }
 
                 if (isValid){
-                    //TODO: api request bejelentkezés küldése
-                    /*
-                    * Ha a request hibával tér vissza akkor az error textekbe bele írni!
-                    * */
-                    HashMap<String, String> dataMap = new HashMap<String, String>();
-                    dataMap.put("email_or_username", userNameMail);
-                    dataMap.put("password", userPws);
-                    JSONObject dataJSON = new JSONObject(dataMap);
-                    RequestTask login = new RequestTask(LoginActivity.this,"http://10.0.2.2:5000/login", "POST", dataJSON.toString());
+                    String loginString = "";
+                    try {
+                        loginString = new JSONObject()
+                                .put("email_or_username", userNameMail)
+                                .put("password", userPws)
+                                .toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    RequestTask login = new RequestTask(LoginActivity.this,"http://10.0.2.2:5000/login", "POST", loginString);
                     login.execute();
                 }
 
@@ -142,6 +146,7 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
         forgotPswTv = findViewById(R.id.login_forgot_psw);
         emailUserErrorTv = findViewById(R.id.login_email_user_error_tv);
         pswErrorTv = findViewById(R.id.login_psw_error_tv);
+        loginRemindCb = findViewById(R.id.login_remind_cb);
 
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiManager.getConnectionInfo();
@@ -160,6 +165,12 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("login", userEmailEt.getText().toString());
             editor.putString("pwd", userPswEt.getText().toString());
+            if (loginRemindCb.isChecked()){
+                editor.putBoolean("remind", true);
+            }
+            else{
+                editor.putBoolean("remind", false);
+            }
             editor.commit();
             Intent main = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(main);
