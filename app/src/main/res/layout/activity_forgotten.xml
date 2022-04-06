@@ -36,31 +36,37 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/forgotten_email"
                 android:inputType="text"
                 android:textColor="#2d3748"/>
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/forgotten_email_error"/>
+                android:id="@+id/forgotten_email_error"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/error_red"
+                android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="40dp">
+        android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        app:cornerRadius="10dp"
-        app:backgroundTint="@color/main_blue"
-        android:textColor="@color/white"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
-        android:textSize="13dp"
-        android:text="Kész"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/forgotten_done"
+            android:text="Kész"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:backgroundTint="@color/main_blue"
+            app:cornerRadius="10dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </RelativeLayout>
