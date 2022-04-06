@@ -1,4 +1,4 @@
-package com.example.tickoff;
+package com.example.tickoff.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,13 +19,20 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.tickoff.DataToFragments;
+import com.example.tickoff.fragments.Favorites;
+import com.example.tickoff.fragments.Profile;
+import com.example.tickoff.R;
+import com.example.tickoff.RequestTask;
+import com.example.tickoff.Response;
+import com.example.tickoff.fragments.Todos;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements RequestTask.OutResponse{
+public class MainActivity extends AppCompatActivity implements RequestTask.OutResponse {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;

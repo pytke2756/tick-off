@@ -1,4 +1,4 @@
-package com.example.tickoff;
+package com.example.tickoff.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.example.tickoff.R;
+import com.example.tickoff.RequestTask;
+import com.example.tickoff.Response;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -25,7 +28,7 @@ import java.util.regex.Pattern;
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthCalculator;
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthMeter;
 
-public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse{
+public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse {
 
     private MaterialButton regRegBtn;
     private TextInputEditText regEmailEt;

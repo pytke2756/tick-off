@@ -1,4 +1,4 @@
-package com.example.tickoff;
+package com.example.tickoff.fragments;
 
 import android.os.Bundle;
 
@@ -6,10 +6,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.tickoff.DataToFragments;
+import com.example.tickoff.MyAdapter;
+import com.example.tickoff.R;
+import com.example.tickoff.RequestTask;
+import com.example.tickoff.Response;
+import com.example.tickoff.Todo;
+import com.example.tickoff.TodoAddDialog;
+import com.example.tickoff.activities.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,10 +27,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListener, DataToFragments{
+public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListener, DataToFragments {
 
     private FloatingActionButton todoAdd;
     private RecyclerView todosUserTodos;

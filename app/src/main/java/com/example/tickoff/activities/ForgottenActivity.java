@@ -1,8 +1,10 @@
-package com.example.tickoff;
+package com.example.tickoff.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.tickoff.R;
 
 public class ForgottenActivity extends AppCompatActivity {
 

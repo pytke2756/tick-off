@@ -1,4 +1,4 @@
-package com.example.tickoff;
+package com.example.tickoff.fragments;
 
 import android.os.Bundle;
 
@@ -6,17 +6,20 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tickoff.DataToFragments;
+import com.example.tickoff.R;
+import com.example.tickoff.Response;
+import com.example.tickoff.UnixDateConverter;
+import com.example.tickoff.activities.MainActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
-public class Profile extends Fragment implements DataToFragments{
+public class Profile extends Fragment implements DataToFragments {
 
     private AppCompatImageView profileUserPicture;
     private AppCompatTextView profileUserFullname;

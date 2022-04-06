@@ -1,4 +1,4 @@
-package com.example.tickoff;
+package com.example.tickoff.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -9,18 +9,16 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.tickoff.R;
+import com.example.tickoff.RequestTask;
+import com.example.tickoff.Response;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,9 +26,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
-public class LoginActivity extends AppCompatActivity implements RequestTask.OutResponse{
+public class LoginActivity extends AppCompatActivity implements RequestTask.OutResponse {
 
     private MaterialButton regBtn;
     private MaterialButton loginBtn;

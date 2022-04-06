@@ -1,4 +1,4 @@
-package com.example.tickoff;
+package com.example.tickoff.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.tickoff.R;
+import com.example.tickoff.RequestHandler;
+import com.example.tickoff.RequestTask;
+import com.example.tickoff.Response;
 
 import org.json.JSONObject;
 
