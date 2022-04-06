@@ -34,16 +34,16 @@ public class RequestHandler {
     }
     public static Response put(String url, String data) throws IOException {
         HttpURLConnection conn = setupConnection(url);
-        conn.setRequestMethod("PUT");
+        conn.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+        conn.setRequestMethod("PATCH");;
         addRequestBody(conn, data);
         return getResponse(conn);
     }
-    public static Response delete(String url) throws IOException {
+    public static Response delete(String url, String data) throws IOException {
         HttpURLConnection conn = setupConnection(url);
         conn.setRequestMethod("DELETE");
+        addRequestBody(conn, data);
         return getResponse(conn);
-
-        //asd123Asd$!as
     }
 
     private static void addRequestBody(HttpURLConnection conn, String data) throws IOException{

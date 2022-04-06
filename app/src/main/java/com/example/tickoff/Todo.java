@@ -9,22 +9,24 @@ public class Todo {
     private String todo;
     private int category_id;
     private long creation_date;
+    private long deadline;
+    private long end_date;
     private boolean done;
+    private boolean important;
 
-    public Todo(int id, int user_id, String todo, int category_id, int creation_date, boolean done) {
+
+    public Todo(int id, int user_id, String todo, int category_id, long creation_date, long deadline,
+                long end_date, boolean done, boolean important) {
         this.id = id;
         this.user_id = user_id;
         this.todo = todo;
         this.category_id = category_id;
         this.creation_date = creation_date;
+        this.deadline = deadline;
+        this.end_date = end_date;
+        this.deadline = deadline;
         this.done = done;
-    }
-
-    public Todo(String todo, int category_id, long creation_date) {
-        this.todo = todo;
-        this.category_id = category_id;
-        this.creation_date = creation_date;
-        this.done = false;
+        this.important = important;
     }
 
     public int getId() {
@@ -47,7 +49,19 @@ public class Todo {
         return creation_date;
     }
 
-    public boolean getDone() {
+    public long getEnd_date() {
+        return end_date;
+    }
+
+    public boolean isDone() {
         return done;
+    }
+
+    public long getDeadline() {
+        return deadline;
+    }
+
+    public boolean isImportant() {
+        return important;
     }
 }

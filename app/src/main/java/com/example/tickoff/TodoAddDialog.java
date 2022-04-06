@@ -106,16 +106,12 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
             dayString = "0" + dayString;
         }
         String date = year + "." + monthString  + "." + dayString + ".";
-        Log.d("date", date);
-        Log.d("dateDay", String.valueOf(dayOfMonth));
-        Log.d("dateMonth", String.valueOf(month));
         Calendar c = Calendar.getInstance();
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DATE, dayOfMonth);
         c.set(Calendar.YEAR, year);
         Date d = c.getTime();
         dateInteger = UnixDateConverter.toUnixTime(d.getTime());
-        Log.d("DATEINTEGER", String.valueOf(dateInteger));
         editTextDate.setText(date);
     }
 
@@ -161,30 +157,4 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
         datePickerDialog.show();
 
     }
-
-    /*private class TodoAddTask extends AsyncTask<Void, Void, Response> {
-        private String todoAddJsonString;
-        public TodoAddTask(String todoAddJsonString){
-            this.todoAddJsonString = todoAddJsonString;
-        }
-
-        @Override
-        protected Response doInBackground(Void... voids) {
-            Response response = null;
-            try {
-                response = RequestHandler.post(, todoAddJsonString);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(Response response) {
-            super.onPostExecute(response);
-            if (response.getResponseCode() >= 400){
-                todoDialogTitleError.setText(response.getContent());
-            }
-        }
-    }*/
 }

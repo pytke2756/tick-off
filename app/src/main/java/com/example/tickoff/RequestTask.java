@@ -38,11 +38,11 @@ public class RequestTask extends AsyncTask<Void, Void, Response> {
                 case "POST":
                     response = RequestHandler.post(requestUrl, requestParams);
                     break;
-                case "PUT":
+                case "PATCH":
                     response = RequestHandler.put(requestUrl, requestParams);
                     break;
                 case "DELETE":
-                    response = RequestHandler.delete(requestUrl);
+                    response = RequestHandler.delete(requestUrl, requestParams);
                     break;
             }
         } catch (IOException e) {

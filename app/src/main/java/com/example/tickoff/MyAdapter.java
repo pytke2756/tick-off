@@ -1,6 +1,7 @@
 package com.example.tickoff;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
     Context context;
     List<Todo> todos;
 
@@ -32,8 +37,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyHolder holder, int position) {
         holder.todoTitle.setText(todos.get(position).getTodo());
-        holder.todoEndDate.setText(UnixDateConverter.toDateString(todos.get(position).getCreation_date())); //TODO: ezt javítani mert ez most teszt, kell az endDate
-        holder.todoCategory.setText(Categories.getCategory(todos.get(position).getCategory_id())); //átalakítani szöveggé
+        holder.todoEndDate.setText(UnixDateConverter.toDateString(todos.get(position).getDeadline())); //TODO: ezt javítani mert ez most teszt, kell az endDate
+        holder.todoCategory.setText(Categories.getCategory(todos.get(position).getCategory_id()));
         holder.todo = todos.get(position);
     }
 
@@ -41,6 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     public int getItemCount() {
         return todos.size();
     }
+
 
     public static class MyHolder extends RecyclerView.ViewHolder {
 
@@ -68,6 +74,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
                 @Override
                 public void onClick(View view) {
                     String message = todo.getTodo() + " kész";
+                    String todoDoneString = "";
+                    try {
+                        todoDoneString = new JSONObject()
+                                .put("id", todo.getId())
+                                .put("done", 1)
+                                .put("todoText", todo.getTodo())
+                                .put("categoryID", todo.getCategory_id())
+                                .put("important", todo.isImportant())
+                                .toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("TODO DONE", todoDoneString);
+                    RequestTask patch = new RequestTask(view.getContext(), "http://10.0.2.2:5000/todo", "PATCH", todoDoneString);
+                    patch.execute();
                     Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -75,6 +96,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             todoCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String todoDeleteString = "";
+
+                    try {
+                        todoDeleteString = new JSONObject()
+                                .put("id", todo.getId())
+                                .toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    RequestTask delete = new RequestTask(view.getContext(), "http://10.0.2.2:5000/todo", "DELETE", todoDeleteString);
+                    delete.execute();
+
                     String message = todo.getTodo() + " törölve";
                     Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
                 }

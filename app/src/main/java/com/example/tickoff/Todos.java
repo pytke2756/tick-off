@@ -28,7 +28,7 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
     private RecyclerView todosUserTodos;
     private MyAdapter myAdapter;
 
-    List<Todo> todos;
+    public List<Todo> todos;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,36 +71,80 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
 
     @Override
     public void dataSend(String title, int category, long date) {
-        HashMap<String, String> todoAddMap = new HashMap<String, String>();
-        todoAddMap.put("todo", title);
-        todoAddMap.put("categoryID", String.valueOf(category));
-        JSONObject todoAddJSON = new JSONObject(todoAddMap);
-        Log.d("JSON ADD", todoAddJSON.toString());
+        String todoAddString = "";
+        try {
+            todoAddString = new JSONObject()
+                    .put("todo", title)
+                    .put("important", 0)
+                    .put("deadline", date)
+                    .put("categoryID", category)
+                    .toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        todos.add(new Todo(title, category, date));
-        todosUserTodos.setAdapter(myAdapter);
-
-
-        RequestTask todoAdd = new RequestTask(getContext(), "http://10.0.2.2:5000/todo", "POST",todoAddJSON.toString());
+        RequestTask todoAdd = new RequestTask(getContext(), "http://10.0.2.2:5000/todo", "POST",todoAddString);
         todoAdd.execute();
+    }
+
+    private boolean isTodoInList(JSONObject obj){
+        for (int i = 0; i < todos.size(); i++) {
+            try {
+                if (todos.get(i).getId() == obj.getInt("id")){
+                    Gson gson= new Gson();
+                    Todo t = gson.fromJson(obj.toString(),Todo.class);
+                    todos.set(i,t);
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    private void adapterSet(){
+        myAdapter = new MyAdapter(getActivity(), todos);
+        todosUserTodos.setAdapter(myAdapter);
     }
 
     @Override
     public void sendData(Response response) {
-        JSONObject res;
-        JSONArray data = null;
-        Log.d("fasz", response.getContent());
-
+        JSONObject res = null;
+        JSONArray data;
+        Object todoArrayOrNot;
+        Type type = new TypeToken<List<Todo>>(){}.getType();
+        Gson obj = new Gson();
         try {
             res = new JSONObject(response.getContent());
-            data = new JSONArray(res.getString("data"));
-            if (data != null && data.length() >= 1){
-                Gson obj = new Gson();
-                Type type = new TypeToken<List<Todo>>(){}.getType();
-                todos = obj.fromJson(data.toString(), type);
-                Log.d("datum", String.valueOf(todos.get(todos.size()-1).getCreation_date()));
-                myAdapter = new MyAdapter(getActivity(), todos);
-                todosUserTodos.setAdapter(myAdapter);
+            todoArrayOrNot = res.get("data");
+            if (todoArrayOrNot instanceof String){
+                if (todoArrayOrNot.equals("todo successfully deleted")){
+                    RequestTask refresh = new RequestTask(getContext(), "http://10.0.2.2:5000/todo", "GET");
+                    refresh.execute();
+                }
+            }
+
+            if (todoArrayOrNot instanceof JSONArray){
+                data = new JSONArray(todoArrayOrNot.toString());
+                if (data.length() >= 1){
+                    todos = obj.fromJson(data.toString(), type);
+                    adapterSet();
+                }
+            }
+            else if (todoArrayOrNot instanceof JSONObject){
+                JSONObject todo = new JSONObject(todoArrayOrNot.toString());
+                if (isTodoInList(todo)){
+                    adapterSet();
+                }
+                else {
+                    todos.add(new Todo(todo.getInt("id"), todo.getInt("user_id"),
+                            todo.getString("todo"), todo.getInt("category_id"),
+                            todo.getLong("creation_date"), todo.getLong("deadline"),
+                            todo.getLong("end_date"),
+                            todo.getBoolean("done"), todo.getBoolean("important")));
+                    adapterSet();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
