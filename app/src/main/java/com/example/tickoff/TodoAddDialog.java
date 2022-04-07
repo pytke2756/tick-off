@@ -19,12 +19,13 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class TodoAddDialog extends AppCompatDialogFragment implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse{
+public class TodoAddDialog extends AppCompatDialogFragment implements DatePickerDialog.OnDateSetListener{
     private TextInputEditText editTextTitle;
     private AppCompatSpinner todoDialogCategorySpinner;
     private TextInputEditText editTextDate;
@@ -32,6 +33,8 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
     private AppCompatTextView todoDialogTitleError;
     private AppCompatTextView todoDialogCategoryError;
     private AppCompatTextView todoDialogDateError;
+    private MaterialButton todoAddDialogAddBtn;
+    private MaterialButton todoAddDialogCancelBtn;
 
     private long dateInteger;
 
@@ -39,50 +42,48 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog builder = new AlertDialog.Builder(getContext()).create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.todo_add_dialog,null);
-        String[] catgories = new String[]{"Tanulás", "Munka", "Bevásárlás", "Család", "Számlák"};
-        builder.setView(view)
-                .setTitle("Todo hozzáadása")
-                .setNegativeButton("Mégse", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .setPositiveButton("Hozzáad", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String title = editTextTitle.getText().toString().trim();
-                        String category = todoDialogCategorySpinner.getSelectedItem().toString().trim();
-                        String date = editTextDate.getText().toString();
-                        boolean isValid = true;
-                        if (title.isEmpty()){
-                            todoDialogTitleError.setText(R.string.empty_input_error);
-                            isValid = false;
-                        }
-                        if (category.isEmpty()){
-                            todoDialogCategoryError.setText(R.string.empty_input_error);
-                            isValid = false;
-                        }
-                        if (date.isEmpty()){
-                            todoDialogDateError.setText(R.string.empty_input_error);
-                            isValid = false;
-                        }
-                        if (isValid){
-                            todoAddDialogListener.dataSend(title, Categories.getIndex(category), dateInteger);
-                        }
-                        else{
-                            Toast.makeText(getContext(), "Kötelező mindent kitölteni", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
         init(view);
+        String[] catgories = new String[]{"Tanulás", "Munka", "Bevásárlás", "Család", "Számlák"};
+        builder.setView(view);
+        todoAddDialogAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                errorReset();
+                String title = editTextTitle.getText().toString().trim();
+                String category = todoDialogCategorySpinner.getSelectedItem().toString().trim();
+                String date = editTextDate.getText().toString();
+                boolean isValid = true;
+                if (title.isEmpty()){
+                    todoDialogTitleError.setText(R.string.empty_input_error);
+                    isValid = false;
+                }
+                if (category.isEmpty()){
+                    todoDialogCategoryError.setText(R.string.empty_input_error);
+                    isValid = false;
+                }
+                if (date.isEmpty()){
+                    todoDialogDateError.setText(R.string.empty_input_error);
+                    isValid = false;
+                }
+                if (isValid){
+                    todoAddDialogListener.todoAddDataSend(title, Categories.getIndex(category), dateInteger);
+                    dismiss();
+                }
+            }
+        });
+        todoAddDialogCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item, catgories);
         todoDialogCategorySpinner.setAdapter(adapter);
 
-        return builder.create();
+        return builder;
     }
 
     @Override
@@ -115,13 +116,8 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
         editTextDate.setText(date);
     }
 
-    @Override
-    public void response(Response response) {
-
-    }
-
     public interface TodoAddDialogListener{
-        void dataSend(String title, int category, long date);
+        void todoAddDataSend(String title, int category, long date);
     }
 
     private void init(View view){
@@ -131,6 +127,8 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
         todoDialogCategoryError = view.findViewById(R.id.todo_dialog_category_error);
         todoDialogTitleError = view.findViewById(R.id.todo_dialog_title_error);
         todoDialogDateError = view.findViewById(R.id.todo_dialog_date_error);
+        todoAddDialogCancelBtn = view.findViewById(R.id.todo_add_dialog_cancel_btn);
+        todoAddDialogAddBtn = view.findViewById(R.id.todo_add_dialog_add_btn);
 
 
 
@@ -155,6 +153,11 @@ public class TodoAddDialog extends AppCompatDialogFragment implements DatePicker
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
+    }
 
+    private void errorReset() {
+        todoDialogCategoryError.setText("");
+        todoDialogTitleError.setText("");
+        todoDialogDateError.setText("");
     }
 }

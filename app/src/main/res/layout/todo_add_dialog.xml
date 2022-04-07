@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/todo_dialog_title_layout"
-        android:hint="Todo title"
+        android:hint="Teendő"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxStrokeColor="@color/main_blue"
         app:hintTextColor="@color/input_hint">
@@ -21,8 +21,10 @@
             android:inputType="text"
             android:textColor="#2d3748"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
             android:id="@+id/todo_dialog_title_error"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,8 +36,10 @@
             android:spinnerMode="dropdown"
             android:background="@android:drawable/btn_dropdown"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
             android:id="@+id/todo_dialog_category_error"
             android:layout_below="@+id/todo_dialog_category_spinner"/>
 
@@ -44,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/todo_dialog_date_layout"
-        android:hint="Todo date"
+        android:hint="Eddig befejezni"
         android:layout_below="@+id/todo_dialog_category_error"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxStrokeColor="@color/main_blue"
@@ -58,8 +62,42 @@
             android:textColor="#2d3748"
             android:focusable="false"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
             android:id="@+id/todo_dialog_date_error"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/todo_dialog_date_layout"
+        android:layout_centerHorizontal="true"
+        android:gravity="end">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/todo_add_dialog_add_btn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Hozzáad"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:backgroundTint="@color/main_blue"
+            app:cornerRadius="10dp"
+            android:layout_marginRight="20dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/todo_add_dialog_cancel_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:rippleColor="@color/main_blue"
+            app:strokeColor="@color/main_blue"
+            android:textColor="@color/main_blue"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Mégse"
+            android:textSize="13dp"
+            app:cornerRadius="10dp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </RelativeLayout>

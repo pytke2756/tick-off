@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tickoff.DataToFragments;
 import com.example.tickoff.MyAdapter;
@@ -72,12 +74,12 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
 
     private void todoAdd(){
         TodoAddDialog todoAddDialog = new TodoAddDialog();
-        todoAddDialog.show(getActivity().getSupportFragmentManager(), "teszt");
+        todoAddDialog.show(getActivity().getSupportFragmentManager(), "TodoAdd");
         todoAddDialog.setListener(this);
     }
 
     @Override
-    public void dataSend(String title, int category, long date) {
+    public void todoAddDataSend(String title, int category, long date) {
         String todoAddString = "";
         try {
             todoAddString = new JSONObject()
@@ -134,9 +136,14 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
 
             if (todoArrayOrNot instanceof JSONArray){
                 data = new JSONArray(todoArrayOrNot.toString());
-                if (data.length() >= 1){
+                if (data.length() > 0){
                     todos = obj.fromJson(data.toString(), type);
                     adapterSet();
+                }
+                else if (data.length() == 0){
+                    todos = new ArrayList<>();
+                    adapterSet();
+                    Toast.makeText(getContext(), "Nincs jelenleg teendőd", Toast.LENGTH_SHORT).show();
                 }
             }
             else if (todoArrayOrNot instanceof JSONObject){
@@ -151,6 +158,7 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
                             todo.getLong("end_date"),
                             todo.getBoolean("done"), todo.getBoolean("important")));
                     adapterSet();
+                    Toast.makeText(getContext(),"Új teendő hozzááadva", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (JSONException e) {
