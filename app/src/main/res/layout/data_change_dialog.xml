@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="15dp"
+    android:focusableInTouchMode="true">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/data_change_dialog_lastname_layout"
+        android:hint="Új vezetéknév"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/main_blue"
+        app:hintTextColor="@color/input_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_change_dialog_lastname"
+            android:inputType="text"
+            android:textColor="#2d3748"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
+            android:id="@+id/data_change_dialog_lastname_error"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/data_change_dialog_firstname_layout"
+        android:hint="Új keresztnév"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/main_blue"
+        app:hintTextColor="@color/input_hint"
+        android:layout_below="@id/data_change_dialog_lastname_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_change_dialog_firstname"
+            android:inputType="textPassword"
+            android:textColor="#2d3748" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
+            android:layout_below="@id/data_change_dialog_lastname_layout"
+            android:id="@+id/data_change_dialog_firstname_error"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/data_change_dialog_date_layout"
+        android:hint="Új születési dátum"
+        android:layout_below="@+id/data_change_dialog_firstname_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/main_blue"
+        app:hintTextColor="@color/input_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_change_dialog_date"
+            android:inputType="text"
+            android:textColor="#2d3748"
+            android:focusable="false"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/error_red"
+            android:textSize="13sp"
+            android:id="@+id/data_change_dialog_date_error"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/data_change_dialog_edit_btn"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:text="Módosít"
+        android:textColor="@color/white"
+        android:textSize="13dp"
+        app:backgroundTint="@color/main_blue"
+        app:cornerRadius="10dp"
+        android:layout_below="@id/data_change_dialog_date_layout"
+        android:layout_centerHorizontal="true"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/data_change_dialog_cancel_btn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:rippleColor="@color/main_blue"
+        app:strokeColor="@color/main_blue"
+        android:textColor="@color/main_blue"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:text="Mégse"
+        android:textSize="13dp"
+        app:cornerRadius="10dp"
+        android:layout_below="@id/data_change_dialog_edit_btn"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
