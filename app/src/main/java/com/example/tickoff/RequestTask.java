@@ -12,6 +12,8 @@ public class RequestTask extends AsyncTask<Void, Void, Response> {
     private Context context;
     private OutResponse outResponse;
 
+    private final String BASE_URL = "https://api.tickoff.hu/";
+
     public RequestTask(Context context, String requestUrl, String requestType) {
         this.requestUrl = requestUrl;
         this.requestType = requestType;
@@ -33,16 +35,16 @@ public class RequestTask extends AsyncTask<Void, Void, Response> {
         try {
             switch (requestType){
                 case "GET":
-                    response = RequestHandler.get(requestUrl);
+                    response = RequestHandler.get(BASE_URL + requestUrl);
                     break;
                 case "POST":
-                    response = RequestHandler.post(requestUrl, requestParams);
+                    response = RequestHandler.post(BASE_URL + requestUrl, requestParams);
                     break;
                 case "PATCH":
-                    response = RequestHandler.put(requestUrl, requestParams);
+                    response = RequestHandler.put( BASE_URL + requestUrl, requestParams);
                     break;
                 case "DELETE":
-                    response = RequestHandler.delete(requestUrl, requestParams);
+                    response = RequestHandler.delete(BASE_URL + requestUrl, requestParams);
                     break;
             }
         } catch (IOException e) {

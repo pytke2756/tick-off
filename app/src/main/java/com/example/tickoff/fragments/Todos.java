@@ -92,7 +92,7 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
             e.printStackTrace();
         }
 
-        RequestTask todoAdd = new RequestTask(getContext(), "http://10.0.2.2:5000/todo", "POST",todoAddString);
+        RequestTask todoAdd = new RequestTask(getContext(), "todo", "POST",todoAddString);
         todoAdd.execute();
     }
 
@@ -129,7 +129,7 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
             todoArrayOrNot = res.get("data");
             if (todoArrayOrNot instanceof String){
                 if (todoArrayOrNot.equals("todo successfully deleted")){
-                    RequestTask refresh = new RequestTask(getContext(), "http://10.0.2.2:5000/todo", "GET");
+                    RequestTask refresh = new RequestTask(getContext(), "todo", "GET");
                     refresh.execute();
                 }
             }

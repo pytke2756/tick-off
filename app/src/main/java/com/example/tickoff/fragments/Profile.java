@@ -137,7 +137,7 @@ public class Profile extends Fragment implements DataToFragments {
     }
 
     private void getProfileData(){
-        RequestTask refresh = new RequestTask(getContext(), "http://10.0.2.2:5000/profile-data", "GET");
+        RequestTask refresh = new RequestTask(getContext(), "profile-data", "GET");
         refresh.execute();
     }
 }

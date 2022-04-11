@@ -63,7 +63,7 @@ public class UsernameChangeDialog extends AppCompatDialogFragment{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    RequestTask pswChange = new RequestTask(getContext(),"http://10.0.2.2:5000/change-username", "PATCH", usernameChangeString);
+                    RequestTask pswChange = new RequestTask(getContext(),"change-username", "PATCH", usernameChangeString);
                     pswChange.execute();
                     dismiss();
                 }

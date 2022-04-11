@@ -64,7 +64,7 @@ public class DataChangeDialog extends AppCompatDialogFragment implements DatePic
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                RequestTask pswChange = new RequestTask(getContext(),"http://10.0.2.2:5000/change-data", "PATCH", userDataChangeString);
+                RequestTask pswChange = new RequestTask(getContext(),"change-data", "PATCH", userDataChangeString);
                 pswChange.execute();
                 dismiss();
             }

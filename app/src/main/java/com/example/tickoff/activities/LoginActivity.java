@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    RequestTask login = new RequestTask(LoginActivity.this,"http://10.0.2.2:5000/login", "POST", loginString);
+                    RequestTask login = new RequestTask(LoginActivity.this,"login", "POST", loginString);
                     login.execute();
                 }
 

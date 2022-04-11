@@ -56,7 +56,7 @@ public class ForgottenActivity extends AppCompatActivity implements RequestTask.
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    RequestTask forgotten = new RequestTask(ForgottenActivity.this,"http://10.0.2.2:5000/password-reset-request", "POST", forgottenString);
+                    RequestTask forgotten = new RequestTask(ForgottenActivity.this,"password-reset-request", "POST", forgottenString);
                     forgotten.execute();
                 }
 

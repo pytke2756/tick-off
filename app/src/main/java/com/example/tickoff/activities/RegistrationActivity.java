@@ -204,7 +204,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                     Date d = c.getTime();
                     dataMap.put("born_date", String.valueOf(Math.floor(d.getTime()/1000)));
                     JSONObject dataJSON = new JSONObject(dataMap);
-                    RequestTask registration = new RequestTask(RegistrationActivity.this, "http://10.0.2.2:5000/register", "POST", dataJSON.toString());
+                    RequestTask registration = new RequestTask(RegistrationActivity.this, "register", "POST", dataJSON.toString());
                     registration.execute();
                 }
             }

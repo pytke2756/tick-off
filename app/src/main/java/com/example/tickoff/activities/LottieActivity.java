@@ -55,7 +55,7 @@ public class LottieActivity extends AppCompatActivity implements RequestTask.Out
                     dataMap.put("email_or_username", restartUser.getString("login", ""));
                     dataMap.put("password", restartUser.getString("pwd", ""));
                     JSONObject dataJSON = new JSONObject(dataMap);
-                    RequestTask login = new RequestTask(LottieActivity.this,"http://10.0.2.2:5000/login", "POST", dataJSON.toString());
+                    RequestTask login = new RequestTask(LottieActivity.this,"login", "POST", dataJSON.toString());
                     login.execute();
                     changeActivity = new Intent(LottieActivity.this, MainActivity.class);
                 }else{

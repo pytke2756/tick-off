@@ -85,7 +85,7 @@ public class PswChangeDialog extends AppCompatDialogFragment{
                     }
 
                     login.edit().putString("pwd", newPsw).apply();
-                    RequestTask pswChange = new RequestTask(getContext(),"http://10.0.2.2:5000/change-password", "PATCH", pswChangeString);
+                    RequestTask pswChange = new RequestTask(getContext(),"change-password", "PATCH", pswChangeString);
                     pswChange.execute();
                     dismiss();
                 }

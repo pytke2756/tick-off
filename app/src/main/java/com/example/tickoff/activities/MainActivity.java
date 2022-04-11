@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
         toggle.syncState();
 
         sendDataTo = R.id.main;
-        RequestTask todos = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/todo", "GET");
+        RequestTask todos = new RequestTask(MainActivity.this, "todo", "GET");
         todos.execute();
 
 
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.main:
-                        RequestTask todos = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/todo", "GET");
+                        RequestTask todos = new RequestTask(MainActivity.this, "todo", "GET");
                         todos.execute();
                         sendDataTo = R.id.main;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Todos()).commit();
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favorites()).commit();
                         break;
                     case R.id.profile:
-                        RequestTask profile = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/profile-data", "GET");
+                        RequestTask profile = new RequestTask(MainActivity.this, "profile-data", "GET");
                         profile.execute();
                         sendDataTo = R.id.profile;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Profile()).commit();
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
         dataMap.put("email_or_username", restartUser.getString("login", ""));
         dataMap.put("password", restartUser.getString("pwd", ""));
         JSONObject dataJSON = new JSONObject(dataMap);
-        RequestTask login = new RequestTask(MainActivity.this,"http://10.0.2.2:5000/login", "POST", dataJSON.toString());
+        RequestTask login = new RequestTask(MainActivity.this,"login", "POST", dataJSON.toString());
         login.execute();
     }
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
     }
 
     private void logout(){
-        RequestTask logout = new RequestTask(MainActivity.this, "http://10.0.2.2:5000/logout", "GET");
+        RequestTask logout = new RequestTask(MainActivity.this, "logout", "GET");
         logout.execute();
     }
 
