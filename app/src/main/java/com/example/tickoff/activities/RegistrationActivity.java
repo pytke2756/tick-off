@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.example.tickoff.PswCheck;
 import com.example.tickoff.R;
 import com.example.tickoff.RequestTask;
 import com.example.tickoff.Response;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthCalculator;
+import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthLevel;
 import nu.aaro.gustav.passwordstrengthmeter.PasswordStrengthMeter;
 
 public class RegistrationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, RequestTask.OutResponse {
@@ -45,6 +47,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     private AppCompatTextView regFirstnameErrorTv;
     private AppCompatTextView regUsernameErrorTv;
     private PasswordStrengthMeter meter;
+    private PasswordStrengthLevel[] strengthLevels;
 
     private boolean pwdIsValid;
 
@@ -94,19 +97,55 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         meter.setPasswordStrengthCalculator(new PasswordStrengthCalculator() {
             @Override
             public int calculatePasswordSecurityLevel(String password) {
-                if (password.length() > 12 && pwdSpecialCharacterCheck(password) &&
-                        pwdUppercaseCheck(password) && pwdLowercaseCheck(password) && pwdDigitCheck(password)){
+                if (password.length() > 10 && PswCheck.pwdSpecialCharacterCheck(password) &&
+                        PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password) && PswCheck.pwdDigitCheck(password)){
                     return 5;
-                }else if(password.length() > 12 && pwdDigitCheck(password)&&
-                        pwdUppercaseCheck(password) && pwdLowercaseCheck(password)){
+                }
+                else if(password.length() > 10 && PswCheck.pwdDigitCheck(password)&&
+                        PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)){
                     return 4;
-                }else if (password.length() > 12 && pwdUppercaseCheck(password) && pwdLowercaseCheck(password)){
+                }
+                else if (password.length() > 9 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && !PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 4;
+                }
+                else if (password.length() > 9 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 4;
+                }
+                else if (password.length() > 7 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 4;
+                }
+                else if (password.length() > 7 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && !PswCheck.pwdSpecialCharacterCheck(password)){
                     return 3;
                 }
-                else if (password.length() > 8 && pwdUppercaseCheck(password)){
+                else if(password.length() < 8 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && !PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 2;
+                }
+                else if(password.length() < 8 && !PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && !PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 2;
+                }
+                else if(password.length() < 8 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && !PswCheck.pwdDigitCheck(password) && !PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 2;
+                }
+                else if(password.length() < 8 && PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 2;
+                }
+                else if(password.length() < 8 && !PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && PswCheck.pwdDigitCheck(password) && PswCheck.pwdSpecialCharacterCheck(password)){
+                    return 2;
+                }
+                else if (password.length() > 3 && !PswCheck.pwdUppercaseCheck(password) && PswCheck.pwdLowercaseCheck(password)
+                        && !PswCheck.pwdDigitCheck(password) && !PswCheck.pwdSpecialCharacterCheck(password)){
                     pwdIsValid = false;
                     return 2;
-                }else if (password.length() > 6){
+                }else if (password.length() >2){
                     pwdIsValid = false;
                     return 1;
                 }else{
@@ -117,7 +156,7 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
 
             @Override
             public int getMinimumLength() {
-                return 4;
+                return 3;
             }
 
             @Override
@@ -232,42 +271,6 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
         regFirstnameErrorTv.setText("");
     }
 
-    private boolean pwdDigitCheck(String password){
-        Pattern digit = Pattern.compile("[0-9]");
-        if (digit.matcher(password).find()){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean pwdLowercaseCheck(String password){
-        Pattern lowercase = Pattern.compile("[a-z]");
-        if (lowercase.matcher(password).find()){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean pwdUppercaseCheck(String password){
-        Pattern uppercase = Pattern.compile("[A-Z]");
-        if (uppercase.matcher(password).find()){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean pwdSpecialCharacterCheck(String password){
-        String[] specialCharacters = {"!", "\"", "#" , "$", "%", "&", "\\'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";",
-                "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"};
-
-        for (int i = 0; i < specialCharacters.length; i++) {
-            if (password.contains(specialCharacters[i])){
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void init(){
         regRegBtn = findViewById(R.id.reg_reg_btn);
         regEmailEt = findViewById(R.id.reg_email_et);
@@ -291,6 +294,15 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
 
         pwdIsValid = false;
 
+        strengthLevels = new PasswordStrengthLevel[]{
+                new PasswordStrengthLevel("Túl rövid", android.R.color.darker_gray), //0
+                new PasswordStrengthLevel("Gyenge", android.R.color.holo_red_dark), //1
+                new PasswordStrengthLevel("Közepes", android.R.color.holo_orange_dark), //2
+                new PasswordStrengthLevel("Jó", android.R.color.holo_orange_light), //3
+                new PasswordStrengthLevel("Erős", android.R.color.holo_blue_light), //4
+                new PasswordStrengthLevel("Nagyon erős", android.R.color.holo_green_dark)}; //5
+
+        meter.setStrengthLevels(strengthLevels);
     }
 
     @Override
