@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tickoff.activities.MainActivity;
@@ -65,6 +66,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
                 MaterialButton edit = popupView.findViewById(R.id.edit_todo_window_todo_edit);
                 MaterialButton delete = popupView.findViewById(R.id.edit_todo_window_todo_delete);
                 MaterialButton done = popupView.findViewById(R.id.edit_todo_window_todo_done);
+
+                AppCompatTextView title = popupView.findViewById(R.id.edit_todo_window_todo_title);
+                AppCompatTextView category = popupView.findViewById(R.id.edit_todo_window_todo_category);
+                AppCompatTextView date = popupView.findViewById(R.id.edit_todo_window_todo_date);
+
+                title.setText(todos.get(position).getTodo());
+                category.setText(Categories.getCategory(todos.get(position).getCategory_id()));
+                date.setText(UnixDateConverter.toDateString(todos.get(position).getDeadline()));
 
 
                 delete.setOnClickListener(new View.OnClickListener() {
