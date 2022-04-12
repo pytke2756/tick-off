@@ -16,9 +16,11 @@ import com.example.tickoff.PswCheck;
 import com.example.tickoff.R;
 import com.example.tickoff.RequestTask;
 import com.example.tickoff.Response;
+import com.example.tickoff.UnixDateConverter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -210,16 +212,14 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                     pwdMatchErrorTv.setText(R.string.empty_input_error);
                 }
                 if (!pwdIsValid){
-                    Toast.makeText(RegistrationActivity.this, "Nem felel meg a jelszavad", Toast.LENGTH_SHORT).show();
+                    pwdMatchErrorTv.setText("A jelszavad nem elég erős!");
                 }
                 if (firstname.isEmpty()){
                     isValid = false;
-                    //TODO: kicsúszik a szöveg
                     regFirstnameErrorTv.setText(R.string.empty_input_error);
                 }
                 if (lastname.isEmpty()){
                     isValid = false;
-                    //TODO: kicsúszik a szöveg
                     regLastnameErrorTv.setText(R.string.empty_input_error);
                 }
                 if (birthDay.isEmpty()){
@@ -227,23 +227,27 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
                     regBirthErrorTv.setText(R.string.empty_input_error);
                 }
                 if (isValid){
-                    //TODO: request api, regisztráció küldése, ha hiba van akkor mehetnek az errorokba
-                    HashMap<String, String> dataMap = new HashMap<String, String>();
-                    dataMap.put("email", email);
-                    dataMap.put("username", username);
-                    dataMap.put("password", pwd);
-                    dataMap.put("password_again", regPwdAgainEt.getText().toString());
-                    dataMap.put("firstName", firstname);
-                    dataMap.put("lastName", lastname);
+                    String regString = "";
                     String[] date = birthDay.split("/");
                     Calendar c = Calendar.getInstance();
                     c.set(Calendar.MONTH, Integer.parseInt(date[0]));
                     c.set(Calendar.DATE, Integer.parseInt(date[1]));
                     c.set(Calendar.YEAR, Integer.parseInt(date[2]));
                     Date d = c.getTime();
-                    dataMap.put("born_date", String.valueOf(Math.floor(d.getTime()/1000)));
-                    JSONObject dataJSON = new JSONObject(dataMap);
-                    RequestTask registration = new RequestTask(RegistrationActivity.this, "register", "POST", dataJSON.toString());
+                    try {
+                        regString = new JSONObject()
+                                .put("email", email)
+                                .put("username", username)
+                                .put("password", pwd)
+                                .put("password_again", regPwdAgainEt.getText().toString())
+                                .put("firstName", firstname)
+                                .put("lastName", lastname)
+                                .put("born_date", UnixDateConverter.toUnixTime(d.getTime()))
+                                .toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    RequestTask registration = new RequestTask(RegistrationActivity.this, "register", "POST", regString);
                     registration.execute();
                 }
             }
@@ -314,8 +318,49 @@ public class RegistrationActivity extends AppCompatActivity implements DatePicke
     @Override
     public void response(Response response) {
         if (response.getResponseCode() >= 400){
-            //TODO: Errorokat visszaadni
-            Log.d("ERROR", response.getContent());
+            try {
+                JSONObject res = new JSONObject(response.getContent());
+                String data = res.getString("data");
+                if(data.equals("email can't be null")){
+                    regEmailErrorTv.setText(R.string.empty_input_error);
+                }
+                else if(data.equals("email already in use")){
+                    regEmailErrorTv.setText("E-mail cím haszánaltban van!");
+                }
+                else if(data.equals("username can't be null")){
+                    regUsernameErrorTv.setText(R.string.empty_input_error);
+                }
+                else if(data.equals("username already in use")){
+                    regUsernameErrorTv.setText("Felhasználónév haszánaltban van!");
+                }
+
+                else if(data.equals("password length is too short")){
+                    pwdMatchErrorTv.setText("Túl rövid!");
+                }
+                else if(data.equals("password must contain a number")){
+                    pwdMatchErrorTv.setText("Kötelező szám!");
+                }
+                else if(data.equals("password must contain lowercase")){
+                    pwdMatchErrorTv.setText("Kisbetű kötelező!");
+                }
+                else if(data.equals("password length is too long")){
+                    pwdMatchErrorTv.setText("Túl hosszú!");
+                }
+                else if (data.equals("lastname can't be null")){
+                    regLastnameErrorTv.setText(R.string.empty_input_error);
+                }
+                else if(data.equals("firstname can't be null")){
+                    regFirstnameErrorTv.setText(R.string.empty_input_error);
+                }
+                else if(data.equals("born date can't be null")){
+                    regBirthErrorTv.setText(R.string.empty_input_error);
+                }
+                else if(data.equals("the two password is not equal")){
+                    pwdMatchErrorTv.setText("Nem egyezik a két jelszó!");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         else{
             Log.d("SIKER", response.getContent());
