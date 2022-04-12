@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ndroid="http://schemas.android.com/tools"
+    android:background="#F2F2F2"
+    android:padding="15dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_todo_window_todo_title"
+        android:text="teszt todo asdasdasdasdasdasd"
+        android:textColor="@color/black"
+        android:textSize="20dp"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_todo_window_todo_linear"
+        android:layout_below="@id/edit_todo_window_todo_title"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_todo_window_todo_category"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginRight="50dp"
+            android:text="Család"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_todo_window_todo_date"
+            android:textColor="#898989"
+            android:textSize="20dp"
+            android:text="2020.02.02"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_todo_window_todo_linear"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_todo_window_todo_delete"
+            android:layout_marginRight="20dp"
+            android:text="Törlés"
+            android:textSize="13dp"
+            app:backgroundTint="#FF0000"
+            app:cornerRadius="10dp"
+            ndroid:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_todo_window_todo_edit"
+            android:layout_marginRight="20dp"
+            android:text="Módosítás"
+            android:textSize="13dp"
+            app:backgroundTint="#FFD600"
+            app:cornerRadius="10dp"
+            ndroid:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_todo_window_todo_done"
+            android:text="Kész"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:backgroundTint="#00FF38"
+            app:cornerRadius="10dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>
