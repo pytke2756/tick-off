@@ -149,43 +149,40 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
             android:gravity="center_horizontal"
-            android:layout_marginBottom="40dp">
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="10dp"
-                app:backgroundTint="@color/main_blue"
-                android:textColor="@color/white"
-                android:layout_width="155dp"
-                android:layout_height="wrap_content"
                 android:id="@+id/profile_user_change"
-                android:textSize="13dp"
-                android:text="Felhasználónév módosítása"/>
-
-            <com.google.android.material.button.MaterialButton
-                app:cornerRadius="10dp"
-                app:backgroundTint="@color/main_blue"
-                android:textColor="@color/white"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
+                android:text="Felhasználónév módosítása"
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                app:backgroundTint="@color/main_blue"
+                app:cornerRadius="10dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/profile_data_change"
-                android:textSize="13dp"
-                android:text="Adatok módosítása"/>
-
-            <com.google.android.material.button.MaterialButton
-                app:cornerRadius="10dp"
-                app:backgroundTint="@color/main_blue"
-                android:textColor="@color/white"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
+                android:text="Adatok módosítása"
+                android:textColor="@color/white"
                 android:textSize="13dp"
+                app:backgroundTint="@color/main_blue"
+                app:cornerRadius="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/profile_psw_change"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
                 android:text="Jelszó módosítása"
-                android:id="@+id/profile_psw_change"/>
-
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                app:backgroundTint="@color/main_blue"
+                app:cornerRadius="10dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
     </RelativeLayout>
-
 </FrameLayout>
