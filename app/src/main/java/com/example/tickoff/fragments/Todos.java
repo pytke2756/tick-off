@@ -100,10 +100,16 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
         for (int i = 0; i < todos.size(); i++) {
             try {
                 if (todos.get(i).getId() == obj.getInt("id")){
-                    Gson gson= new Gson();
-                    Todo t = gson.fromJson(obj.toString(),Todo.class);
-                    todos.set(i,t);
-                    return true;
+                    if (obj.getBoolean("done")){
+                        todos.remove(i);
+                        return true;
+                    }else{
+                        Gson gson= new Gson();
+                        Todo t = gson.fromJson(obj.toString(),Todo.class);
+                        todos.set(i,t);
+                        return true;
+                    }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -137,7 +143,13 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
             if (todoArrayOrNot instanceof JSONArray){
                 data = new JSONArray(todoArrayOrNot.toString());
                 if (data.length() > 0){
-                    todos = obj.fromJson(data.toString(), type);
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject todo = data.getJSONObject(i);
+                        if (!todo.getBoolean("done")){
+                            Todo t = obj.fromJson(todo.toString(), Todo.class);
+                            todos.add(t);
+                        }
+                    }
                     adapterSet();
                 }
                 else if (data.length() == 0){
@@ -152,6 +164,7 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
                     adapterSet();
                 }
                 else {
+                    if (!todo.getBoolean("done"))
                     todos.add(new Todo(todo.getInt("id"), todo.getInt("user_id"),
                             todo.getString("todo"), todo.getInt("category_id"),
                             todo.getLong("creation_date"), todo.getLong("deadline"),

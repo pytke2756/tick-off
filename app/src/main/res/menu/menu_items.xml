@@ -5,6 +5,10 @@
             android:title="Főoldal"
             android:icon="@drawable/ic_home"/>
 
+        <item android:id="@+id/done"
+            android:title="Kész"
+            android:icon="@drawable/ic_done"/>
+
         <item android:id="@+id/favorites"
             android:title="Csillagozott"
             android:icon="@drawable/ic_star"/>

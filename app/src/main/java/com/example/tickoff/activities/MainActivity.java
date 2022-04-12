@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tickoff.DataToFragments;
+import com.example.tickoff.fragments.Done;
 import com.example.tickoff.fragments.Favorites;
 import com.example.tickoff.fragments.Profile;
 import com.example.tickoff.R;
@@ -84,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                         todos.execute();
                         sendDataTo = R.id.main;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Todos()).commit();
+                        break;
+                    case R.id.done:
+                        RequestTask done = new RequestTask(MainActivity.this, "todo", "GET");
+                        done.execute();
+                        sendDataTo = R.id.main;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Done()).commit();
                         break;
                     case R.id.favorites:
                         sendDataTo = R.id.favorites;
