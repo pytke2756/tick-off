@@ -152,25 +152,28 @@ public class LoginActivity extends AppCompatActivity implements RequestTask.OutR
 
     @Override
     public void response(Response response) {
-        if (response.getResponseCode() >= 400){
-            //TODO: backendend a hibákat visszaadni
-            emailUserErrorTv.setText(response.getContent());
-        }
-        else if (response.getResponseCode() == 200){
-            //TODO: a visszaadott tokent/id-t SharedPreferencesbe menteni
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("login", userEmailEt.getText().toString());
-            editor.putString("pwd", userPswEt.getText().toString());
-            if (loginRemindCb.isChecked()){
-                editor.putBoolean("remind", true);
-            }
-            else{
-                editor.putBoolean("remind", false);
-            }
-            editor.commit();
-            Intent main = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(main);
-            finish();
+        switch (response.getResponseCode()){
+            case 400:
+                emailUserErrorTv.setText("Nincs megerősítve az e-mail cím!");
+                break;
+            case 401:
+                emailUserErrorTv.setText("Helytelen felhasználónév vagy jelszó!");
+                break;
+            case 200:
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("login", userEmailEt.getText().toString());
+                editor.putString("pwd", userPswEt.getText().toString());
+                if (loginRemindCb.isChecked()){
+                    editor.putBoolean("remind", true);
+                }
+                else{
+                    editor.putBoolean("remind", false);
+                }
+                editor.commit();
+                Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(main);
+                finish();
+                break;
         }
     }
 }
