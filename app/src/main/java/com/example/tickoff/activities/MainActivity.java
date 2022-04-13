@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Done()).commit();
                         break;
                     case R.id.favorites:
+                        RequestTask favorites = new RequestTask(MainActivity.this, "todo", "GET");
+                        favorites.execute();
                         sendDataTo = R.id.favorites;
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Favorites()).commit();
                         break;

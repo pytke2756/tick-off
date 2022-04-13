@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
         holder.todoEndDate.setText(UnixDateConverter.toDateString(todos.get(position).getDeadline()));
         holder.todoCategory.setText(Categories.getCategory(todos.get(position).getCategory_id()));
         holder.todo = todos.get(position);
+
+        if (todos.get(position).isImportant()){
+            holder.todoImportant.setBackgroundResource(R.drawable.ic_star_important);
+        }
+        else{
+            holder.todoImportant.setBackgroundResource(R.drawable.ic_star_not_important);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,12 +150,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
 
     public static class MyHolder extends RecyclerView.ViewHolder {
 
-        TextView todoTitle;
-        TextView todoEndDate;
-        TextView todoCategory;
+        AppCompatTextView todoTitle;
+        AppCompatTextView todoEndDate;
+        AppCompatTextView todoCategory;
 
-        ImageButton todoDone;
-        ImageButton todoCancel;
+        AppCompatImageButton todoDone;
+        AppCompatImageButton todoCancel;
+        AppCompatImageButton todoImportant;
 
         Todo todo;
 
@@ -161,6 +170,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
 
             todoDone = itemView.findViewById(R.id.todo_done);
             todoCancel = itemView.findViewById(R.id.todo_cancel);
+            todoImportant = itemView.findViewById(R.id.todo_important);
+
+
 
             todoDone.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -202,6 +214,41 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
 
                     String message = todo.getTodo() + " törölve";
                     Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            todoImportant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String todoDoneString = "";
+                    if (todo.isImportant()){
+                        try {
+                            todoDoneString = new JSONObject()
+                                    .put("id", todo.getId())
+                                    .put("done", todo.isDone())
+                                    .put("todoText", todo.getTodo())
+                                    .put("categoryID", todo.getCategory_id())
+                                    .put("important", 0)
+                                    .toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        try {
+                            todoDoneString = new JSONObject()
+                                    .put("id", todo.getId())
+                                    .put("done", todo.isDone())
+                                    .put("todoText", todo.getTodo())
+                                    .put("categoryID", todo.getCategory_id())
+                                    .put("important", 1)
+                                    .toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    RequestTask patch = new RequestTask(view.getContext(), "todo", "PATCH", todoDoneString);
+                    patch.execute();
                 }
             });
         }
