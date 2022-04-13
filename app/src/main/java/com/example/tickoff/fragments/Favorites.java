@@ -81,6 +81,7 @@ public class Favorites extends Fragment implements DataToFragments {
             }
             else if (arrayOrNot instanceof JSONArray){
                 data = new JSONArray(arrayOrNot.toString());
+                favoritesTodos.clear();
                 Log.d("Favorites", data.toString());
                 if (data.length() > 0){
                     for (int i = 0; i < data.length(); i++) {

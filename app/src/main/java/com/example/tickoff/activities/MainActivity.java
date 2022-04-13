@@ -29,6 +29,8 @@ import com.example.tickoff.Response;
 import com.example.tickoff.fragments.Todos;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
     private boolean loggingOut;
     private int sendDataTo;
     private DataToFragments dataToFragments;
+
+    private boolean firstLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        RequestTask profile = new RequestTask(MainActivity.this, "profile-data", "GET");
+        profile.execute();
 
         sendDataTo = R.id.main;
         RequestTask todos = new RequestTask(MainActivity.this, "todo", "GET");
@@ -138,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
 
         loggingOut = false;
         sendDataTo = R.id.main;
+
+        firstLogin = true;
     }
 
     @Override
@@ -177,7 +186,41 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
 
     @Override
     public void response(Response response) {
-        switch (sendDataTo){
+        JSONObject res = null;
+        Object stringOrNot;
+
+        try {
+            res = new JSONObject(response.getContent());
+            stringOrNot = res.get("data");
+            if (stringOrNot instanceof String){
+                if (stringOrNot.equals("logged out")){
+                    Log.d("LOGGED OUT", "DONE");
+                }
+                else if (stringOrNot.equals("todo successfully deleted")){
+                    dataToFragments.sendData(response);
+                }
+
+
+            } else if (stringOrNot instanceof JSONObject) {
+                if (firstLogin){
+                    JSONObject data = new JSONObject(stringOrNot.toString());
+                    username.setText(data.getString("username"));
+                    firstLogin = false;
+                }
+                else{
+                    dataToFragments.sendData(response);
+                }
+            }
+            else if (stringOrNot instanceof JSONArray){
+                dataToFragments.sendData(response);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        /*switch (sendDataTo){
             case R.id.favorites:
                 dataToFragments.sendData(response);
                 sendDataToReset();
@@ -195,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                 sendDataToReset();
                 break;
 
-        }
+        }*/
     }
 
     private void sendDataToReset(){

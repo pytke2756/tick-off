@@ -142,6 +142,7 @@ public class Todos extends Fragment implements TodoAddDialog.TodoAddDialogListen
 
             if (todoArrayOrNot instanceof JSONArray){
                 data = new JSONArray(todoArrayOrNot.toString());
+                todos.clear();
                 if (data.length() > 0){
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject todo = data.getJSONObject(i);
