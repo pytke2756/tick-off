@@ -20,21 +20,13 @@ import com.example.tickoff.PswChangeDialog;
 import com.example.tickoff.R;
 import com.example.tickoff.RequestTask;
 import com.example.tickoff.Response;
-import com.example.tickoff.Todo;
-import com.example.tickoff.TodoAddDialog;
 import com.example.tickoff.UnixDateConverter;
 import com.example.tickoff.UsernameChangeDialog;
 import com.example.tickoff.activities.MainActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 public class Profile extends Fragment implements DataToFragments {
 
@@ -105,6 +97,7 @@ public class Profile extends Fragment implements DataToFragments {
         JSONObject res;
         JSONObject data = null;
         Object responseObject;
+        SharedPreferences login = getContext().getSharedPreferences("TickOff", Context.MODE_PRIVATE);
         try {
             res = new JSONObject(response.getContent());
             responseObject = res.get("data");
@@ -117,18 +110,7 @@ public class Profile extends Fragment implements DataToFragments {
                 profileUserUsername.setText(profilData.getString("username"));
                 profileUserBirthdate.setText(UnixDateConverter.toDateString(profilData.getLong("born_date")));
                 profileUserRegdate.setText(UnixDateConverter.toDateString(profilData.getLong("register_date")));
-            }
-            if (responseObject instanceof String){
-                if (responseObject.equals("password changed successfully")){
-                    Toast.makeText(getContext(), "Sikeres jelszó módosítás", Toast.LENGTH_SHORT).show();
-                }
-                else if(responseObject.equals("username changed successfully")){
-                    Toast.makeText(getContext(), "Sikeres felhasználónév módosítás", Toast.LENGTH_SHORT).show();
-                }
-                else if (responseObject.equals("data changed successfully")){
-                    Toast.makeText(getContext(), "Sikeresen módosítottad az adatokat", Toast.LENGTH_SHORT).show();
-                }
-                getProfileData();
+                login.edit().putString("email_or_username", profilData.getString("username")).apply();
             }
         }catch (JSONException e) {
             e.printStackTrace();

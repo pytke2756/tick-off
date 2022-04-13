@@ -3,12 +3,10 @@ package com.example.tickoff;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,8 +48,8 @@ public class DataChangeDialog extends AppCompatDialogFragment implements DatePic
             @Override
             public void onClick(View view) {
                 errorReset();
-                String firstname = dataChangeDialogLastname.getText().toString().trim();
-                String lastname = dataChangeDialogFirstname.getText().toString().trim();
+                String firstname = dataChangeDialogFirstname.getText().toString().trim();
+                String lastname = dataChangeDialogLastname.getText().toString().trim();
                 String ido = dataChangeDialogDate.getText().toString().trim();
 
                 String userDataChangeString = "";

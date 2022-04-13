@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tickoff.DataToFragments;
 import com.example.tickoff.fragments.Done;
@@ -198,6 +199,20 @@ public class MainActivity extends AppCompatActivity implements RequestTask.OutRe
                 }
                 else if (stringOrNot.equals("todo successfully deleted")){
                     dataToFragments.sendData(response);
+                }
+                else if(stringOrNot.equals("data changed successfully")){
+                    Toast.makeText(getApplicationContext(), "Sikeresen módosítottad az adatokat", Toast.LENGTH_SHORT).show();
+                    RequestTask profile = new RequestTask(MainActivity.this, "profile-data", "GET");
+                    profile.execute();
+                }
+                else if(stringOrNot.equals("username changed successfully")){
+                    Toast.makeText(getApplicationContext(), "Sikeres felhasználónév módosítás", Toast.LENGTH_SHORT).show();
+                }
+                else if(stringOrNot.equals("a felhasználónév már foglalt")){
+                    Toast.makeText(getApplicationContext(), "A felhasználónév már foglalt", Toast.LENGTH_SHORT).show();
+                }
+                if (stringOrNot.equals("password changed successfully")){
+                    Toast.makeText(getApplicationContext(), "Sikeres jelszó módosítás", Toast.LENGTH_SHORT).show();
                 }
 
 

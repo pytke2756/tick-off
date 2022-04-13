@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/data_change_dialog_firstname"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:textColor="#2d3748" />
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

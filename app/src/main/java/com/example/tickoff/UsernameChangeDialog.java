@@ -2,11 +2,11 @@ package com.example.tickoff;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,13 +44,17 @@ public class UsernameChangeDialog extends AppCompatDialogFragment{
                 String newUsername = usernameChangeDialogUsername.getText().toString().trim();
                 String psw = usernameChangeDialogPassword.getText().toString().trim();
                 boolean isValid = true;
-                //TODO: pontosabb validáció
+                SharedPreferences login = getContext().getSharedPreferences("TickOff", Context.MODE_PRIVATE);
                 if (newUsername.isEmpty()){
                     usernameChangeDialogUsernameError.setText(R.string.empty_input_error);
                     isValid = false;
                 }
                 if (psw.isEmpty()){
                     usernameChangeDialogPasswordError.setText(R.string.empty_input_error);
+                    isValid = false;
+                }
+                if (!psw.equals(login.getString("pwd", ""))){
+                    usernameChangeDialogPasswordError.setText("Hibás jelszó");
                     isValid = false;
                 }
                 if (isValid){
