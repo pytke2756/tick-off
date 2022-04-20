@@ -1,4 +1,4 @@
-# tick-off
+# TickOff
 Viszgaremek Petrik 2022
 
 tickoff.apk - installer
